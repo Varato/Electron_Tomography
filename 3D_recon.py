@@ -63,13 +63,15 @@ if __name__ == "__main__":
     # obj = low_pass_filter_density_map(obj)
 
 
-    theta = range(0,180,2)
+    angle_interval = 20
+    theta = range(0,180,angle_interval)
     sinograms, theta = slice_wise_radon(obj, theta=theta)
     projections = constract_projections(sinograms, theta)
 
     recon_obj = slice_wise_iradon(sinograms, theta)
 
     error = recon_obj - obj
+    rms = np.std(error)
     print("rms error = {}".format(np.std(error)))
 
     fig1, ((ax1,ax2), (ax3,ax4)) = plt.subplots(ncols = 2, nrows = 2)
@@ -86,6 +88,7 @@ if __name__ == "__main__":
     ax2.text(20,-10,"reconstructed obj")
     ax1.text(-60, 60, "mid slice \n along y")
     ax3.text(-60, 60, "mid slice \n along z")
+    ax4.text(-100, 140, "angle interval = {} ,rms error = {:.5f}".format(angle_interval, rms))
 
     ax1.axis("off")
     ax2.axis("off")
@@ -93,15 +96,9 @@ if __name__ == "__main__":
     ax4.axis("off")
 
 
-
-
-
-
-
-
-
     # plt.imshow(projections[:,:,0], cmap=plt.cm.Greys_r)
 
+    plt.savefig("mid_slices.png")
     plt.show()
 
 

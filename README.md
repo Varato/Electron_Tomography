@@ -1,7 +1,11 @@
 # Electron Tomography
 
-### Inside 3D_recon.py
+## Inside 3D_recon.py
 
-The object is
+#### The object
 
 ![](./obj.png)
+
+#### The comparison of oriinal and reconstructed objects
+
+![](./mid_slices.png)
