@@ -13,7 +13,7 @@ def construct_obj():
     x, y, z = np.mgrid[-100:100:Nx*1j, -100:100:Ny*1j, -100:100:Nz*1j]
     gwnoise = abs(np.random.normal(loc = 0, scale = .01,  size=[Nx, Ny, Nz]))
     #  obj = np.where(x*x/80**2 + y*y/50**2 + z*z/10**2 <= 1, gwnoise, 0)
-    obj = np.where( np.logical_or( (x+50)**2/2025 + y**2/2025 + z**2/2025 <=1,\
+    obj = np.where( np.logical_or( (x+30)**2/2025 + y**2/2025 + z**2/2025 <=1,\
         (x-50)**2/100 + y**2/8100 + z**2/900 <=1 ), gwnoise, 0 )
     return obj
 
@@ -60,10 +60,10 @@ def get_obj_slice(obj, index, axis=0):
 
 if __name__ == "__main__":
     obj = construct_obj()
-    obj = low_pass_filter_density_map(obj)
+    # obj = low_pass_filter_density_map(obj)
 
 
-    theta = range(0,180,1)
+    theta = range(0,180,2)
     sinograms, theta = slice_wise_radon(obj, theta=theta)
     projections = constract_projections(sinograms, theta)
 
@@ -72,12 +72,30 @@ if __name__ == "__main__":
     error = recon_obj - obj
     print("rms error = {}".format(np.std(error)))
 
-    fig, (ax1,ax2) = plt.subplots(ncols = 2)
-
+    fig1, ((ax1,ax2), (ax3,ax4)) = plt.subplots(ncols = 2, nrows = 2)
     index = 60
     axis = 1
     ax1.imshow(get_obj_slice(obj, index, axis), cmap=plt.cm.Greys_r)
     ax2.imshow(get_obj_slice(recon_obj, index, axis), cmap=plt.cm.Greys_r)
+    index = 60
+    axis = 2
+    ax3.imshow(get_obj_slice(obj, index, axis), cmap=plt.cm.Greys_r)
+    ax4.imshow(get_obj_slice(recon_obj, index, axis), cmap=plt.cm.Greys_r)
+
+    ax1.text(30,-10,"original obj")
+    ax2.text(20,-10,"reconstructed obj")
+    ax1.text(-60, 60, "mid slice \n along y")
+    ax3.text(-60, 60, "mid slice \n along z")
+
+    ax1.axis("off")
+    ax2.axis("off")
+    ax3.axis("off")
+    ax4.axis("off")
+
+
+
+
+
 
 
 
