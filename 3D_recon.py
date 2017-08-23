@@ -63,7 +63,7 @@ if __name__ == "__main__":
     # obj = low_pass_filter_density_map(obj)
 
 
-    angle_interval = 5
+    angle_interval = 2
     theta = range(0,180,angle_interval)
     sinograms, theta = slice_wise_radon(obj, theta=theta)
     projections = constract_projections(sinograms, theta)
