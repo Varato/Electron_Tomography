@@ -63,7 +63,7 @@ if __name__ == "__main__":
     # obj = low_pass_filter_density_map(obj)
 
 
-    angle_interval = 20
+    angle_interval = 5
     theta = range(0,180,angle_interval)
     sinograms, theta = slice_wise_radon(obj, theta=theta)
     projections = constract_projections(sinograms, theta)
@@ -74,15 +74,16 @@ if __name__ == "__main__":
     rms = np.std(error)
     print("rms error = {}".format(np.std(error)))
 
+    # visulization 1: comparasion
     fig1, ((ax1,ax2), (ax3,ax4)) = plt.subplots(ncols = 2, nrows = 2)
-    index = 60
+    index = int(Ny/2)
     axis = 1
-    ax1.imshow(get_obj_slice(obj, index, axis), cmap=plt.cm.Greys_r)
-    ax2.imshow(get_obj_slice(recon_obj, index, axis), cmap=plt.cm.Greys_r)
-    index = 60
+    im1 = ax1.imshow(get_obj_slice(obj, index, axis), cmap=plt.cm.Greys_r)
+    im2 = ax2.imshow(get_obj_slice(recon_obj, index, axis), cmap=plt.cm.Greys_r)
+    index = int(Nz/2)
     axis = 2
-    ax3.imshow(get_obj_slice(obj, index, axis), cmap=plt.cm.Greys_r)
-    ax4.imshow(get_obj_slice(recon_obj, index, axis), cmap=plt.cm.Greys_r)
+    im3 = ax3.imshow(get_obj_slice(obj, index, axis), cmap=plt.cm.Greys_r)
+    im4 = ax4.imshow(get_obj_slice(recon_obj, index, axis), cmap=plt.cm.Greys_r)
 
     ax1.text(30,-10,"original obj")
     ax2.text(20,-10,"reconstructed obj")
@@ -95,10 +96,40 @@ if __name__ == "__main__":
     ax3.axis("off")
     ax4.axis("off")
 
+    fig1.colorbar(im1, ax=ax1)
+    fig1.colorbar(im2, ax=ax2)
+    fig1.colorbar(im3, ax=ax3)
+    fig1.colorbar(im4, ax=ax4)
 
-    # plt.imshow(projections[:,:,0], cmap=plt.cm.Greys_r)
 
     plt.savefig("mid_slices.png")
+
+    # visulization 2: sinograms
+    index = 90
+    fig2, (ax1, ax2) = plt.subplots(ncols = 2)
+    print(sinograms[:,:,3].shape)
+    im1 = ax1.imshow(get_obj_slice(obj, index, axis=0), cmap = plt.cm.Greys_r)
+    im2 = ax2.imshow(sinograms[:,:,index], cmap = plt.cm.Greys_r)
+    ax1.set_title("slice along x")
+    ax2.set_title("corresponding sinogram")
+    fig2.colorbar(im1, ax = ax1)
+    fig2.colorbar(im2, ax = ax2)
+    plt.savefig("sinograms.png")
+
+
+    # visulization 3: projections
+    indexes = np.linspace(0, len(theta)-1, 5, dtype=int)
+    fig3, axes = plt.subplots(ncols = len(indexes))
+    for i in range(len(indexes)):
+        im = axes[i].imshow(projections[:,:,indexes[i]], cmap = plt.cm.Greys_r)
+        axes[i].axis("off")
+        axes[i].set_title("proj @ {}".format(theta[indexes[i]]))
+        # fig3.colorbar(im, ax = axes[i])
+    plt.savefig("projections.png")
+
+
+
+
     plt.show()
 
 
