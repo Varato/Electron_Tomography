@@ -11,12 +11,10 @@ np.random.seed(2017)
 
 def construct_obj():
     x, y, z = np.mgrid[-100:100:Nx*1j, -100:100:Ny*1j, -100:100:Nz*1j]
-    print(x.shape)
-    quit()
     gwnoise = abs(np.random.normal(loc = 0, scale = .01,  size=[Nx, Ny, Nz]))
-    # obj = np.where(x*x/80**2 + y*y/50**2 + z*z/10**2 <= 1, gwnoise, 0)
+    #  obj = np.where(x*x/80**2 + y*y/50**2 + z*z/10**2 <= 1, gwnoise, 0)
     obj = np.where( np.logical_or( (x+50)**2/2025 + y**2/2025 + z**2/2025 <=1,\
-        (x-50)**2/100 + y**2/8100 + z**2/2500 <=1 ), 1, 0 )
+        (x-50)**2/100 + y**2/8100 + z**2/900 <=1 ), gwnoise, 0 )
     return obj
 
 def low_pass_filter_density_map(in_arr, damping=-1., thr=1.E-3, num_cycles=2):
@@ -38,9 +36,9 @@ def slice_wise_radon(obj, theta=range(80)):
     return sinograms, theta
 
 def slice_wise_iradon(sinograms, theta):
-    recon_obj = np.zeros( (min(Ny, Nz),)*2 + (Nx,) )
+    recon_obj = np.zeros( (Nx,) + (min(Ny, Nz),)*2 )
     for s in range(Nx):
-        recon_obj[:,:,s] = st.iradon(sinograms[:,:,s], theta=theta, circle=True)
+        recon_obj[s,:,:] = st.iradon(sinograms[:,:,s], theta=theta, circle=True)
     return recon_obj
 
 def constract_projections(sinograms, theta):
@@ -49,15 +47,23 @@ def constract_projections(sinograms, theta):
         projections[:,:,t] = sinograms[:,t,:]
     return projections
 
-
-
+def get_obj_slice(obj, index, axis=0):
+    if axis == 0:
+        return obj[index,:,:]
+    elif axis == 1:
+        return obj[:,index,:]
+    elif axis == 2:
+        return obj[:,:,index]
+    else:
+        print("wrong axis input.")
 
 
 if __name__ == "__main__":
     obj = construct_obj()
     obj = low_pass_filter_density_map(obj)
 
-    theta = range(0,180,10)
+
+    theta = range(0,180,1)
     sinograms, theta = slice_wise_radon(obj, theta=theta)
     projections = constract_projections(sinograms, theta)
 
@@ -66,7 +72,17 @@ if __name__ == "__main__":
     error = recon_obj - obj
     print("rms error = {}".format(np.std(error)))
 
-    plt.imshow(projections[:,:,0], cmap=plt.cm.Greys_r)
+    fig, (ax1,ax2) = plt.subplots(ncols = 2)
+
+    index = 60
+    axis = 1
+    ax1.imshow(get_obj_slice(obj, index, axis), cmap=plt.cm.Greys_r)
+    ax2.imshow(get_obj_slice(recon_obj, index, axis), cmap=plt.cm.Greys_r)
+
+
+
+
+    # plt.imshow(projections[:,:,0], cmap=plt.cm.Greys_r)
 
     plt.show()
 
