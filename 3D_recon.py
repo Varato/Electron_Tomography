@@ -11,6 +11,8 @@ np.random.seed(2017)
 
 def construct_obj():
     x, y, z = np.mgrid[-100:100:Nx*1j, -100:100:Ny*1j, -100:100:Nz*1j]
+    print(x.shape)
+    quit()
     gwnoise = abs(np.random.normal(loc = 0, scale = .01,  size=[Nx, Ny, Nz]))
     # obj = np.where(x*x/80**2 + y*y/50**2 + z*z/10**2 <= 1, gwnoise, 0)
     obj = np.where( np.logical_or( (x+50)**2/2025 + y**2/2025 + z**2/2025 <=1,\
@@ -48,9 +50,12 @@ def constract_projections(sinograms, theta):
     return projections
 
 
+
+
+
 if __name__ == "__main__":
     obj = construct_obj()
-    # obj = low_pass_filter_density_map(obj)
+    obj = low_pass_filter_density_map(obj)
 
     theta = range(0,180,10)
     sinograms, theta = slice_wise_radon(obj, theta=theta)
