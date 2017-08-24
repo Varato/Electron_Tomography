@@ -4,8 +4,15 @@
 
 #### The object
 
-![](./obj.png)
+![](./imgs/obj.png)
 
 #### The comparison of oriinal and reconstructed objects
 
-![](./mid_slices.png)
+![](./imgs/mid_slices.png)
+
+#### The angle-interval depended error trend
+
+![](./imgs/None_error.png)
+![](./imgs/ramp_error.png)
+![](./imgs/hamming_error.png)
+
