@@ -30,8 +30,8 @@ phantom = st.rescale(phantom, scale=0.4, mode='reflect')
 def error_at_dtheta(dtheta, ax=None, filter = "ramp"):
 	dtheta = int(dtheta)
 	theta = range(0,180,dtheta)
-	sinogram = st.radon(phantom, theta, circle = True)
-	rc_phantom = st.iradon(sinogram, theta, circle = True, filter = filter)
+	sinogram = st.radon(phantom, theta, circle = False)
+	rc_phantom = st.iradon(sinogram, theta, circle = False, filter = filter)
 
 	error = rc_phantom - phantom
 	rms = np.sqrt(np.mean(error**2))
@@ -44,11 +44,11 @@ def error_at_dtheta(dtheta, ax=None, filter = "ramp"):
 	return rms
 
 if __name__ == "__main__":
-	dthetas = [1, 5, 10, 18, 50]
+	dthetas = [1, 2, 5, 10, 18, 50]
 	rmses = []
-	filter = "hamming"
+	filter = None 
 
-	fig, axes = plt.subplots(ncols = len(dthetas)+1, nrows = 2)
+	fig, axes = plt.subplots(ncols = len(dthetas)+1, nrows = 2, figsize=[12,9])
 	for i in range(len(dthetas)):
 		rmses.append( error_at_dtheta(dthetas[i], ax=axes[1,i+1], filter=filter) )
 
