@@ -34,7 +34,7 @@ def error_at_dtheta(dtheta, ax=None, filter = "ramp"):
 	rc_phantom = st.iradon(sinogram, theta, circle = True, filter = filter)
 
 	error = rc_phantom - phantom
-	rms = np.std(error)
+	rms = np.sqrt(np.mean(error**2))
 
 	if ax:
 		ax.imshow(rc_phantom, cmap = plt.cm.Greys_r)
@@ -46,9 +46,8 @@ def error_at_dtheta(dtheta, ax=None, filter = "ramp"):
 if __name__ == "__main__":
 	dthetas = [1, 5, 10, 18, 50]
 	rmses = []
-	filter = "hann"
+	filter = "hamming"
 
-	# fig0, ax0 = plt.subplots()
 	fig, axes = plt.subplots(ncols = len(dthetas)+1, nrows = 2)
 	for i in range(len(dthetas)):
 		rmses.append( error_at_dtheta(dthetas[i], ax=axes[1,i+1], filter=filter) )

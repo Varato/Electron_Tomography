@@ -71,7 +71,7 @@ if __name__ == "__main__":
     recon_obj = slice_wise_iradon(sinograms, theta)
 
     error = recon_obj - obj
-    rms = np.std(error)
+    rms = np.sqrt(np.mean(error**2))
     print("rms error = {}".format(np.std(error)))
 
     # visulization 1: comparasion
@@ -102,19 +102,18 @@ if __name__ == "__main__":
     fig1.colorbar(im4, ax=ax4)
 
 
-    plt.savefig("mid_slices.png")
+    plt.savefig("imgs/mid_slices.png")
 
     # visulization 2: sinograms
     index = 90
     fig2, (ax1, ax2) = plt.subplots(ncols = 2)
-    print(sinograms[:,:,3].shape)
     im1 = ax1.imshow(get_obj_slice(obj, index, axis=0), cmap = plt.cm.Greys_r)
     im2 = ax2.imshow(sinograms[:,:,index], cmap = plt.cm.Greys_r)
     ax1.set_title("slice along x")
     ax2.set_title("corresponding sinogram")
     fig2.colorbar(im1, ax = ax1)
     fig2.colorbar(im2, ax = ax2)
-    plt.savefig("sinograms.png")
+    plt.savefig("imgs/sinograms.png")
 
 
     # visulization 3: projections
@@ -125,7 +124,7 @@ if __name__ == "__main__":
         axes[i].axis("off")
         axes[i].set_title("proj @ {}".format(theta[indexes[i]]))
         # fig3.colorbar(im, ax = axes[i])
-    plt.savefig("projections.png")
+    plt.savefig("imgs/projections.png")
 
 
 
