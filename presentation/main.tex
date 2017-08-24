@@ -17,6 +17,7 @@
 \usepackage{mathrsfs}
 \usepackage{graphicx}
 \usepackage{caption}
+\usepackage{bm}
 \usepackage{amsmath,amssymb}
 \usepackage[export]{adjustbox}
 
@@ -38,7 +39,7 @@
 \def\mean#1{\left< #1 \right>}
 \frame{\titlepage}
 
-\section[Achievements]{}
+\section[Existing works]{}
 
 \begin{frame}
     \begin{figure}
@@ -110,7 +111,72 @@
         \includegraphics[scale=0.5,right]{imgs/projections.png}
     \end{figure}
 \end{frame}
+
+\section{Validity of TEM tomography}
+
+\begin{frame}{Image delivered projection}
+    \vspace{-0.5cm}
+    \begin{figure}
+        \includegraphics[scale=0.2]{imgs/TEM_black_box.png}
+    \end{figure}
+    \vspace{-0.5cm}
+    The simplest model: Projection Approx + Weak Phase Object Approx
+    \begin{equation}
+        % \begin{split}
+            % \psi_{i}^{BF}(\bm{r}) = [1 + \im\sigma_e \nu_{\text{proj}}(\bm{r})] \circledast \text{FT}^{-1} [\ee^{-\im \chi (\bm{k})}] \notag \\
+            \Psi_{i}^{\text{BF}}(\bm{k}) = [\delta(0) + \im\sigma_e \mathcal{V}_{\text{proj}}(\bm{k})] \ee^{-\im \chi (\bm{k})} \notag 
+        % \end{split}
+    \end{equation}
+    Tune $\chi$ to achieve $-\pi/2$ phase shift --- phase contrast microscopy.
+    \begin{equation}
+        \psi^{\text{BF}}_i (\bm{r}) = 1-\sigma_e \nu(\bm{r}) ,\ 
+        g^{\text{BF}}(\bm{r}) = 1-2\sigma_e\nu_{\text{proj}} \notag
+    \end{equation}
+    ADF-TEM: transmitted wave is excluded.
+    \begin{equation}
+        \psi^{\text{ADF}}_i(\bm{r}) = 1 - \psi^{\text{BF}}_i(\bm{r}) ,\ 
+        g^{\text{ADF}}(\bm{r}) = [\sigma_e \nu(\bm{r})]^2 \notag
+    \end{equation}
+\end{frame}
+
+\begin{frame}{Validity}
+    \begin{itemize}
+    \item PA: single scattering, thin specimen, potential varies slowly over distance $\sqrt{\Delta z \lambda / 2\pi}$ (Kazuo Ishizuka \& Natsu Uyeda, 1977). And the spatial frequency $q$ of interest is much smaller than $\sqrt{1/4\lambda \Delta z}$ (cited by Vulović, Miloš, et al, 2014).
+    \item WPOA: thin specimen, low atomic number, $\sigma_e \nu < 0.36$ (Vulović, Miloš, et al, 2014).
+    \end{itemize}
+    \vspace{-1cm}
+    \begin{figure}
+        \includegraphics[scale=0.3, right]{imgs/validity.png}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Another problem: electron does}
+
+Tow requirements that contradict each other (Wolfgang Baumeister, Rudo Grimmand Jochen Walz, 1999):
+    \begin{itemize}
+        \item minimum electron does.
+        \item sampling as much as possible and high SNR
+    \end{itemize}
+\vspace{0.5cm}
+    commonly used does: $10-20 \text{e}^{-1}/$\AA${}^2$
+    % \begin{figure}
+    %     \includegraphics[scale=0.4, right]{imgs/SNR_does.png}
+    % \end{figure}
+\end{frame}
+
+\begin{frame}[c]{A numerical approach to study the limitations}
+    \begin{figure}
+        \includegraphics[scale=0.5]{imgs/project.png}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[c]
+\centering
+\huge
+\textbf{Thanks!}
+\end{frame}
 \end{document}
+
 
 
 
