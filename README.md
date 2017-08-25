@@ -16,3 +16,9 @@
 ![](./imgs/ramp_error.png)
 ![](./imgs/hamming_error.png)
 
+#### The filters used in skimage
+![](./imgs/filters_plot.png)
+
+#### Compare reconstruction by different filters
+![](./imgs/filters_compare.png)
+
