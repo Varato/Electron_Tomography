@@ -15,6 +15,8 @@
 ![](./imgs/None_error.png)
 ![](./imgs/ramp_error.png)
 ![](./imgs/hamming_error.png)
+![](./imgs/shepp-logan_error.png)
+
 
 ## The filters used in skimage
 ![](./imgs/filters_plot.png)

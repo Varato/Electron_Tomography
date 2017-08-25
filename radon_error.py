@@ -46,7 +46,7 @@ def error_at_dtheta(dtheta, ax=None, filter = "ramp"):
 if __name__ == "__main__":
 	dthetas = [1, 2, 5, 10, 18, 50]
 	rmses = []
-	filter = None 
+	filter = "shepp-logan" 
 
 	fig, axes = plt.subplots(ncols = len(dthetas)+1, nrows = 2, figsize=[12,9])
 	for i in range(len(dthetas)):
