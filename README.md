@@ -1,6 +1,6 @@
 # Electron Tomography
 
-## Inside 3D_recon.py
+## 3D reconstruction
 
 #### The object
 
@@ -10,15 +10,15 @@
 
 ![](./imgs/mid_slices.png)
 
-#### The angle-interval depended error trend
+## The angle-interval depended error trend
 
 ![](./imgs/None_error.png)
 ![](./imgs/ramp_error.png)
 ![](./imgs/hamming_error.png)
 
-#### The filters used in skimage
+## The filters used in skimage
 ![](./imgs/filters_plot.png)
 
-#### Compare reconstruction by different filters
+## Compare reconstruction by different filters
 ![](./imgs/filters_compare.png)
 

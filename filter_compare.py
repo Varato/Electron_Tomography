@@ -26,7 +26,7 @@ from PIL import Image
 
 # phantom test
 phantom = imread(data_dir + "/phantom.png", as_grey=True)
-phantom = st.rescale(phantom, scale=1, mode='reflect')
+phantom = st.rescale(phantom, scale=0.4, mode='reflect')
 
 # def higt_pass_filter(in_arr, radius = 3):
 #     (xl,yl) = in_arr.shape
@@ -63,7 +63,7 @@ def recon(dtheta, ax = None, axf1 = None, axf2 = None, filter = "ramp"):
     if axf2:
         slicef = spec[spec.shape[0]//2]
         axf2.plot(slicef)
-        axf2.axis([0, 400, 0, 10])
+        axf2.axis([0, 160, 0, 1])
         axf2.set_xticks([])
         axf2.set_xlabel("frequency")
     return rms
@@ -71,7 +71,7 @@ def recon(dtheta, ax = None, axf1 = None, axf2 = None, filter = "ramp"):
 if __name__ == "__main__":
     dtheta = 2
     filters = [None, "ramp", "shepp-logan", "cosine"]
-    fig1, axes = plt.subplots(ncols = 4, nrows = 2)
+    fig, axes = plt.subplots(ncols = 4, nrows = 2, figsize = [11,7])
 
     for i in range(len(filters)):
         rms = recon (dtheta, ax = axes[0,i], axf1 = None, axf2 = axes[1,i], filter = filters[i])
